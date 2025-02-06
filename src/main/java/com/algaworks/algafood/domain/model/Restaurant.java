@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "tb_restaurant")
 public class Restaurant {
 
 	@Id
@@ -12,8 +13,7 @@ public class Restaurant {
 	private Long id;
 	
 	private String name;
-	
-	@Column(name = "shipping_rate")
+
 	private BigDecimal shippingRate;    //taxa de frete
 
 	public Long getId() {
