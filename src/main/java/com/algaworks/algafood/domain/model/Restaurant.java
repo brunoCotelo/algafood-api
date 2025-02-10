@@ -1,65 +1,40 @@
 package com.algaworks.algafood.domain.model;
 
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_restaurant")
+@Getter
+@Setter
 public class Restaurant {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private BigDecimal shippingRate;    //taxa de frete
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    private BigDecimal shippingRate;    //taxa de frete
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public BigDecimal getShippingRate() {
-		return shippingRate;
-	}
-
-	public void setShippingRate(BigDecimal shippingRate) {
-		this.shippingRate = shippingRate;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Restaurant other = (Restaurant) obj;
-		if (id == null) {
-            return other.id == null;
-		} else return id.equals(other.id);
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Restaurant that = (Restaurant) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
-	
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }
